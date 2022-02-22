@@ -14,15 +14,17 @@ module.exports.createNewTask = (req, res, next) => {
 };
 
 module.exports.changeTaskInfo = (req, res, next) => {
-  Task.updateOne({ _id: req.body._id }, req.body).then(result => {
-    Task.find({ _id: req.body._id }).then(result => {
+  const {id} = req.body;
+  Task.updateOne({ _id: id }, id).then(result => {
+    Task.find({ _id: id }).then(result => {
       res.send(result);
     });
   });
 };
 
 module.exports.deleteTask = (req, res, next) => {
-  Task.deleteOne({ _id: req.body._id }).then(result => {
-    res.send('Success delete rask');
+  const {id} = req.body;
+  Task.deleteOne({ _id: id }).then(result => {
+    res.send('Success delete task');
   });
 };
