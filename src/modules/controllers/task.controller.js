@@ -9,12 +9,12 @@ module.exports.getAllTasks = (req, res, next) => {
 module.exports.createTask = (req, res, next) => {
   const task = new Task(req.body);
   const { body } = req;
-  if (body.hasOwnProperty('text')) {
+  if (body) {
     task.save().then(() => {
       Task.find().then(result => {
         res.send({ data: result });
       });
-    }).catch(err => console.log(err));
+    });
   } else {
     res.status(422).send('Error! Params not correct');
   };
