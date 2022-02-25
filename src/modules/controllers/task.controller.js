@@ -6,7 +6,7 @@ module.exports.getAllTasks = (req, res, next) => {
   });
 };
 
-module.exports.createNewTask = (req, res, next) => {
+module.exports.createTask = (req, res, next) => {
   const task = new Task(req.body);
   task.save().then(() => {
     Task.find().then(result => {
@@ -16,12 +16,11 @@ module.exports.createNewTask = (req, res, next) => {
 };
 
 module.exports.changeTaskInfo = (req, res, next) => {
-  const { id } = req.body;
-  Task.updateOne({ _id: id }, id).then(result => {
-    Task.find({ _id: id }).then(result => {
-      //добавить что то в этом месте
-      console.log(result);
-      res.send(result);
+  const reqObject = req.body;
+  const { id } = reqObject;
+  Task.updateOne({ _id: id }, reqObject).then(result => {
+    Task.find().then(result => {
+      res.send({ data: result });
     });
   });
 };
